@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Calculator</title>
+    <!-- Custom links -->
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <input id="display" type="text" placeholder="0">
+            <input type="button" value="AC" onclick="clearScreen()">
+            <input type="button" value="DEL" onclick="del()">
+            <input class="operator" type="button" value="%" onclick="btnPress(value)">
+            <input class="operator" type="button" value="/" onclick="btnPress(value)">
+    
+            <input class="number" type="button" value="7" onclick="btnPress(value)">
+            <input class="number" type="button" value="8" onclick="btnPress(value)">
+            <input class="number" type="button" value="9" onclick="btnPress(value)">
+            <input class="operator" type="button" value="*" onclick="btnPress(value)">
+        
+            <input class="number" type="button" value="4" onclick="btnPress(value)">
+            <input class="number" type="button" value="5" onclick="btnPress(value)">
+            <input class="number" type="button" value="6" onclick="btnPress(value)">
+            <input class="operator" type="button" value="-" onclick="btnPress(value)">
+        
+            <input class="number" type="button" value="1" onclick="btnPress(value)">
+            <input class="number" type="button" value="2" onclick="btnPress(value)">
+            <input class="number" type="button" value="3" onclick="btnPress(value)">
+            <input class="operator" type="button" value="+"  onclick="btnPress(value)">
+       
+            <input class="number" type="button" value="00" onclick="btnPress(value)">
+            <input class="number" type="button" value="0" onclick="btnPress(value)">
+            <input class="number" type="button" value="." onclick="btnPress(value)">
+            <input class="result" type="button" value="=" onclick="calcResult()">
+        </div>
+    </div>
+        
+
+    <script>
+        var screen = document.getElementById('display');
+        
+
+function btnPress(value){
+    screen.value += value;
+}
+
+function calcResult(){
+    let expression = screen.value;
+    let total = 0;
+    let currentNum = '';
+    let operator = '+';
+    let operators = ['+', '-', '*', '/'];
+  
+  for (let i = 0; i < expression.length; i++) {
+    let isOperator = false;
+    for (let j = 0; j < operators.length; j++) {
+      if (expression[i] === operators[j]) {
+        isOperator = true;
+        break;
+      }
+    }
+    if (isOperator) {
+      if (currentNum !== '') {
+        switch (operator) {
+          case '+':
+            total += parseFloat(currentNum);
+            break;
+          case '-':
+            total -= parseFloat(currentNum);
+            break;
+          case '*':
+            total *= parseFloat(currentNum);
+            break;
+          case '/':
+            if (parseFloat(currentNum) !== 0) {
+              total /= parseFloat(currentNum);
+            } else {
+              total = 'Error: Division by zero';
+            }
+            break;
+          default:
+            break;
+        }
+      }
+      currentNum = '';
+      operator = expression[i];
+    } else {
+      currentNum += expression[i];
+    }
+  }
+  
+  if (currentNum !== '') {
+    switch (operator) {
+      case '+':
+        total += parseFloat(currentNum);
+        break;
+      case '-':
+        total -= parseFloat(currentNum);
+        break;
+      case '*':
+        total *= parseFloat(currentNum);
+        break;
+      case '/':
+        if (parseFloat(currentNum) !== 0) {
+          total /= parseFloat(currentNum);
+        } else {
+          total = 'Error: Division by zero';
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  
+  screen.value = total;
+  
+}
+
+
+function clearScreen(){
+    screen.value = " ";
+}
+
+function del(){
+    screen.value = screen.value.slice(0, -1);
+}
+    </script>
+</body>
+</html>
